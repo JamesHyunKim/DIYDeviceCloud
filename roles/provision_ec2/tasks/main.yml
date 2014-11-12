@@ -55,7 +55,7 @@
   add_host: hostname={{ ec2_info.tagged_instances[0].public_ip }} 
             groupname=broker
             ansible_ssh_user={{ username }}
-            ansible_ssh_private_key_file={{ ssh_key }}
+            ansible_ssh_private_key_file={{ private_key }}
 - name: Set broker_name if not set.
   set_fact: broker_name={{ ec2_info.tagged_instances[0].public_dns_name }}
   when: broker_name is not defined
