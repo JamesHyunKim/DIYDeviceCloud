@@ -10,6 +10,7 @@
            key_material="{{ item }}"
            aws_access_key={{ access_key }}
            aws_secret_key={{ secret_key }}
+           validate_certs=no
            region={{ region }}
   with_file: ssh_key_public
 - name: Find Ubuntu AMI.
