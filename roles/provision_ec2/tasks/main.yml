@@ -1,18 +1,4 @@
 ---
-- name: Create SSH keys directory.
-  file: path={{ ssh_dir }} state=directory
-- name: Generate SSH key pair.
-  command: ssh-keygen -t rsa -N '' -f {{ ssh_key }} creates={{ ssh_key }}
-- name: Set SSH key permission.
-  file: path={{ ssh_key }} mode=600
-- name: Upload SSH key to EC2.
-  ec2_key: name={{ keypair }}
-           key_material="{{ item }}"
-           aws_access_key={{ access_key }}
-           aws_secret_key={{ secret_key }}
-           validate_certs=no
-           region={{ region }}
-  with_file: ssh_key_public
 - name: Find Ubuntu AMI.
   ec2_ami_search: distro=ubuntu 
                   release=trusty
