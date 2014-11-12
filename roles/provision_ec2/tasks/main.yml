@@ -1,4 +1,18 @@
 ---
+- name: Create SSH keys directory.
+  file: path={{ ssh_dir }} state=directory
+- name: Generate SSH key pair.
+  command: ssh-keygen -t rsa -N '' -f {{ ssh_key }} creates={{ ssh_key }}
+- name: Set SSH key permission.
+  file: path={{ ssh_key }} mode=600
+- name: Upload SSH key to EC2.
+  ec2_key: name={{ keypair }}
+           key_material="{{ item }}"
+           aws_access_key={{ access_key }}
+           aws_secret_key={{ secret_key }}
+           validate_certs=no
+           region={{ region }}
+  with_file: ssh_key_public
 - name: Find Ubuntu AMI.
   ec2_ami_search: distro=ubuntu 
                   release=trusty
@@ -60,7 +74,7 @@
   add_host: hostname={{ ec2_info.tagged_instances[0].public_ip }} 
             groupname=broker
             ansible_ssh_user={{ username }}
-            ansible_ssh_private_key_file={{ private_key }}
+            ansible_ssh_private_key_file={{ ssh_key }}
 - name: Set broker_name if not set.
   set_fact: broker_name={{ ec2_info.tagged_instances[0].public_dns_name }}
   when: broker_name is not defined
