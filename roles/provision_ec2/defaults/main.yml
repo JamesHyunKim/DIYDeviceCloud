@@ -9,10 +9,10 @@ group:          "devicecloud"
 username:       "ubuntu"
 # Location of the private key PEM file to identify the user.
 # Make sure this file is private, i.e. chmod 600 key.pem
-private_key:   "devicecloud.pem"
+# private_key:   "devicecloud.pem"
 # Private key for access to the server through SSH.
-# ssh_key:        "{{ ssh_dir }}/broker_ec2"
-# ssh_key_public: "{{ ssh_key }}.pub"
+ssh_key:        "{{ ssh_dir }}/broker_ec2"
+ssh_key_public: "{{ ssh_key }}.pub"
 # Instance type.  
 # Keep this as micro unless you know you need (and will pay for) a larger instance.
 instance_type:  "t1.micro"
