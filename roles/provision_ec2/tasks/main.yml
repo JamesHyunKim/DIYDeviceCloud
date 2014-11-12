@@ -31,6 +31,11 @@
       from_port: 8883
       to_port: 8883
       cidr_ip: 0.0.0.0/0
+    rules_egress:
+    - proto: tcp
+      from_port: 0
+      to_port: 65535
+      cidr_ip: 0.0.0.0/0
 - name: Provision server in Amazon EC2.
   ec2: image={{ ubuntu_image.ami }}
        instance_type={{ instance_type }}
